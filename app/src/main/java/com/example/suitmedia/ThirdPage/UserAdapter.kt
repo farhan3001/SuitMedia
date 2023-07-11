@@ -1,6 +1,7 @@
 package com.example.suitmedia.ThirdPage
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -31,15 +32,7 @@ class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.
         holder.itemView.setOnClickListener {
 
             val name = user.first_name + " " + user.last_name
-            val bundle = Bundle()
-            bundle.putString("username", name)
-            val myObj = SecondFragment()
-            myObj.setArguments(bundle)
-            val navController = findNavController(SecondFragment())
-            navController.navigateUp() // to clear previous navigation history
-            navController.navigate(R.id.SecondFragment)
-
-            findNavController()
+            Log.d("User",name)
 
         }
     }

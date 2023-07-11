@@ -8,13 +8,10 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.navigation.fragment.NavHostFragment.Companion.findNavController
-
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
-import com.example.suitmedia.FirstPage.FirstFragment
 import com.example.suitmedia.Model.Users
 import com.example.suitmedia.R
-import com.example.suitmedia.SecondPage.SecondFragment
 import com.squareup.picasso.Picasso
 
 class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.UserViewHolder>() {
@@ -29,10 +26,15 @@ class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.
         holder.bind(user)
 //        var context = holder.itemView.context
 
-        holder.itemView.setOnClickListener {
+        holder.itemView.setOnClickListener {view ->
 
             val name = user.first_name + " " + user.last_name
-            Log.d("User",name)
+            val bundle = Bundle()
+            bundle.putString("username", name)
+//            val myObj = SecondFragment()
+//            myObj.setArguments(bundle)
+            Log.d("Bundle", bundle.toString())
+            view.findNavController().navigate(R.id.action_ThirdFragment_to_SecondFragment, bundle)
 
         }
     }

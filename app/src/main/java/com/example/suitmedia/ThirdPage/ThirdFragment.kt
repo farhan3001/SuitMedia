@@ -90,13 +90,13 @@ class ThirdFragment : Fragment() {
                     val total = userResponse?.total
                     val newUserList = userResponse?.data ?: emptyList()
 //                    userAdapter.userList = newUserList
-                    users += newUserList.shuffled()
+//                    users += newUserList.shuffled()
 
                     if (total != null) {
                         if (total > 10)
                             fetchData(page + 1, perPage)
                     }
-                    userAdapter.notifyDataSetChanged()
+                    users += newUserList.shuffled()
                 } else {
                     // Handle API error
                 }

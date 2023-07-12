@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -18,6 +19,8 @@ class SecondFragment : Fragment() {
 
     private var _binding: FragmentSecondBinding? = null
     private val sharedViewModel: SharedView by activityViewModels()
+
+    private lateinit var buttonBack: ImageButton
 
     private val binding get() = _binding!!
 
@@ -48,8 +51,8 @@ class SecondFragment : Fragment() {
         binding.buttonFirst.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_ThirdFragment)
         }
-
-        binding.buttonBack.setOnClickListener {
+        buttonBack = view.findViewById(R.id.button_back)
+        buttonBack.setOnClickListener {
             findNavController().navigate(R.id.action_SecondFragment_to_FirstFragment)
         }
     }

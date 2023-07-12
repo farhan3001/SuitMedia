@@ -8,7 +8,7 @@ import com.example.suitmedia.ThirdPage.UserAdapter
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
-class Data {
+class DataDomain {
 
     private var users = emptyList<Users>()
 

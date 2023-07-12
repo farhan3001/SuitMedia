@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:id="@+id/item"
-    android:paddingHorizontal="10dp"
+    android:paddingHorizontal="15dp"
     android:paddingVertical="10dp"
     android:layout_height="wrap_content">
 
@@ -11,6 +11,7 @@
         android:id="@+id/imageViewAvatar"
         android:layout_width="80dp"
         android:layout_height="80dp"
+        android:src="@drawable/background"
         android:scaleType="centerCrop" />
 
     <RelativeLayout
@@ -38,7 +39,4 @@
             android:textColor="@color/black"
             android:textSize="10sp" />
     </RelativeLayout>
-
-
-
 </LinearLayout>

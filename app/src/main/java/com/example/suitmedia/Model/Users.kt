@@ -1,6 +1,6 @@
 package com.example.suitmedia.Model
 
-data class Users (
+data class Users(
     val id: Int,
     val email: String,
     val first_name: String,

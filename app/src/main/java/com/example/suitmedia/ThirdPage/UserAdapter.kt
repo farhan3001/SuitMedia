@@ -24,18 +24,12 @@ class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         val user = userList[position]
         holder.bind(user)
-//        var context = holder.itemView.context
 
         holder.itemView.setOnClickListener {view ->
-
             val name = user.first_name + " " + user.last_name
             val bundle = Bundle()
             bundle.putString("username", name)
-//            val myObj = SecondFragment()
-//            myObj.setArguments(bundle)
-            Log.d("Bundle", bundle.toString())
             view.findNavController().navigate(R.id.action_ThirdFragment_to_SecondFragment, bundle)
-
         }
     }
 
@@ -49,21 +43,9 @@ class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.
         private val textName: TextView = itemView.findViewById(R.id.name)
 
         fun bind(user: Users) {
-            // Load the image using a library like Picasso or Glide
             Picasso.get().load(user.avatar).into(imageViewAvatar)
-
             textEmail.text = user.email
             textName.text = user.first_name + " " + user.last_name
-
-            // Bind other user details to their respective views
-        }
-
-        init {
-            itemView.setOnClickListener {
-                val name = textName.text
-                var context = itemView.context
-                Toast.makeText(context, name, Toast.LENGTH_SHORT)
-            }
         }
     }
 

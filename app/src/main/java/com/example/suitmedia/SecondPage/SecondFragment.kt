@@ -1,7 +1,6 @@
 package com.example.suitmedia.SecondPage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,14 +19,12 @@ class SecondFragment : Fragment() {
     private var _binding: FragmentSecondBinding? = null
     private val sharedViewModel: SharedView by activityViewModels()
 
-    // This property is only valid between onCreateView and
-    // onDestroyView.
     private val binding get() = _binding!!
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
 
@@ -39,18 +36,13 @@ class SecondFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val username = arguments?.getString("username")
         val name = sharedViewModel.getName()
-        Log.d("username", username.toString())
-
-//        val args = this.arguments
-//        val inputData = args?.get("name")
-//        binding.name.setText(inputData.toString())
 
         if (name != null) {
-            binding.name.setText(name)
+            binding.name.text = name
         }
 
         if (username != null) {
-            binding.userChose.setText(username.toString())
+            binding.userChose.text = username
         }
 
         binding.buttonFirst.setOnClickListener {

@@ -69,10 +69,7 @@ class FirstFragment : Fragment() {
 
         binding.imageProfile.setOnClickListener{
             sharedViewModel.setAvatar("null")
-
             val drawableResId = R.drawable.ic_photo
-//            val bitmap = BitmapFactory.decodeResource(resources, drawableResId)
-
             Picasso.get()
                 .load(drawableResId)
                 .into(binding.imageProfile)

@@ -10,10 +10,6 @@ import android.util.Log
 class Helpers {
     fun isPalindromeString(inputStr: String): Boolean {
         val str = inputStr.filter { it.isLetterOrDigit() }.lowercase()
-
-        Log.d("str ", str)
-        Log.d("reversed ", str.reversed())
-        Log.d("hasil ", (str == str.reversed()).toString())
         return str == str.reversed()
     }
 }

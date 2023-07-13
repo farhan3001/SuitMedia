@@ -29,20 +29,20 @@ class DataDomain {
                     if (newUserList?.isNotEmpty() == true) {
                         i += page
                         Log.d("Increment", i.toString())
-                        users += newUserList
+                        users = users + newUserList
                         fetchData(i, perPage, userAdapter, apiService, context)
                     }
+                    val usersShuffled = users.shuffled()
+                    userAdapter.userList = usersShuffled
+                    userAdapter.notifyDataSetChanged()
                 } else {
                     // Handle API error
                     Toast.makeText(context, "API ERROR", Toast.LENGTH_SHORT).show()
                 }
-            } catch (e: Exception) {
+            } catch (message: Exception) {
                 // Handle network or other exceptions
-                Toast.makeText(context, e.toString(), Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
             }
-            val usersShuffled = users.shuffled()
-            userAdapter.userList = usersShuffled
-            userAdapter.notifyDataSetChanged()
         }
     }
 

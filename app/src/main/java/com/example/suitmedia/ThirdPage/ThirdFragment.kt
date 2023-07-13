@@ -5,10 +5,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.suitmedia.R
 import com.example.suitmedia.ThirdPage.API.APIInstance
@@ -19,12 +19,13 @@ import com.example.suitmedia.databinding.FragmentThirdBinding
 
 class ThirdFragment : Fragment() {
     private var _binding: FragmentThirdBinding? = null
+    private val binding get() = _binding!!
 
     private lateinit var userAdapter: UserAdapter
 
-    private lateinit var recyclerView: RecyclerView
     private lateinit var swipe: SwipeRefreshLayout
     private lateinit var buttonBack: ImageButton
+    private lateinit var titlePage: TextView
 
     private lateinit var apiService: ApiService
     private var apiInstance = APIInstance
@@ -34,11 +35,10 @@ class ThirdFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val rootView = inflater.inflate(R.layout.fragment_third, container, false)
+        _binding = FragmentThirdBinding.inflate(inflater, container, false)
 
-        recyclerView = rootView.findViewById(R.id.my_recycler_view)
-        swipe = rootView.findViewById(R.id.swipe_to_refresh)
-        buttonBack = rootView.findViewById(R.id.button_back)
+        val recyclerView = binding.myRecyclerView
+        swipe = binding.swipeToRefresh
 
         userAdapter = UserAdapter(emptyList())
         apiService = apiInstance.runApiService()
@@ -48,18 +48,21 @@ class ThirdFragment : Fragment() {
             adapter = userAdapter
         }
 
-        getData()
-
-        return rootView
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val pageLabel: String = getString(R.string.third_fragment_label)
+        titlePage = view.findViewById(R.id.page_title)
+        titlePage.text = pageLabel
 
+        buttonBack = view.findViewById(R.id.button_back)
         buttonBack.setOnClickListener {
             findNavController().navigate(R.id.action_ThirdFragment_to_SecondFragment)
         }
 
+        getData()
         refreshFragment()
     }
 
@@ -70,8 +73,7 @@ class ThirdFragment : Fragment() {
 
     private fun refreshFragment() {
         swipe.setOnRefreshListener {
-            dataDomain.fetchData(1, 10, userAdapter, apiService, context)
-            dataDomain.emptyUserList()
+            getData()
             swipe.isRefreshing = false
         }
     }
@@ -80,6 +82,4 @@ class ThirdFragment : Fragment() {
         dataDomain.fetchData(1, 10, userAdapter, apiService, context)
         dataDomain.emptyUserList()
     }
-
-
 }

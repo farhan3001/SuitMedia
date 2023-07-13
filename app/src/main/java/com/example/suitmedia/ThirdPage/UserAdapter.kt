@@ -26,9 +26,17 @@ class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.
         holder.bind(user)
 
         holder.itemView.setOnClickListener {view ->
+            val id = user.id
             val name = user.first_name + " " + user.last_name
+            val email = user.email
+            val avatar = user.avatar
+
             val bundle = Bundle()
+            bundle.putInt("id", id)
+            bundle.putString("email", email)
             bundle.putString("username", name)
+            bundle.putString("avatar", avatar)
+
             view.findNavController().navigate(R.id.action_ThirdFragment_to_SecondFragment, bundle)
         }
     }

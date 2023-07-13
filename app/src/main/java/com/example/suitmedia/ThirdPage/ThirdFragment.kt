@@ -34,7 +34,7 @@ class ThirdFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentThirdBinding.inflate(inflater, container, false)
 
         val recyclerView = binding.myRecyclerView

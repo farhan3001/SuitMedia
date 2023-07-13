@@ -1,9 +1,9 @@
 package com.example.suitmedia.ThirdPage.API
 
 import android.content.Context
-import android.util.Log
 import android.widget.Toast
 import com.example.suitmedia.Model.Users
+import com.example.suitmedia.R
 import com.example.suitmedia.ThirdPage.UserAdapter
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -28,7 +28,6 @@ class DataDomain {
                     val newUserList = userResponse?.data
                     if (newUserList?.isNotEmpty() == true) {
                         i += page
-                        Log.d("Increment", i.toString())
                         users = users + newUserList
                         fetchData(i, perPage, userAdapter, apiService, context)
                     }
@@ -37,7 +36,11 @@ class DataDomain {
                     userAdapter.notifyDataSetChanged()
                 } else {
                     // Handle API error
-                    Toast.makeText(context, "API ERROR", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        context,
+                        context?.getString(R.string.api_error),
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             } catch (message: Exception) {
                 // Handle network or other exceptions

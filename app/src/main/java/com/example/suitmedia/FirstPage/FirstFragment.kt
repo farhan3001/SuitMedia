@@ -1,7 +1,8 @@
 package com.example.suitmedia.FirstPage
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -22,6 +23,8 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val sharedViewModel: SharedView by activityViewModels()
+    private lateinit var avatar: String
+    private var isButtonClickable = true
 
     private val binding get() = _binding!!
 
@@ -40,40 +43,19 @@ class FirstFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         val name = sharedViewModel.getName()
-        val avatar = sharedViewModel.getAvatar().toString()
+        avatar = sharedViewModel.getAvatar().toString()
 
         if (name != null) {
             binding.inputFirst.setText(name)
         }
 
-        if (avatar != "null" && avatar.isNotEmpty()) {
-            Log.d("Avatar", avatar)
+        if (avatar != getString(R.string.nil) && avatar.isNotEmpty()) {
             Picasso.get().load(avatar).into(binding.imageProfile)
         }
 
-        binding.buttonFirst.setOnClickListener {
-            val input = _binding?.inputFirst?.text.toString()
-            check(input)
-        }
-
-        binding.buttonSecond.setOnClickListener {
-            val input = _binding?.inputFirst?.text.toString()
-
-            if (Helpers().isPalindromeString(input) and input.isNotEmpty()) {
-                sharedViewModel.setName(input)
-                findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
-            } else {
-                Toast.makeText(context, "Name is not palindrome", Toast.LENGTH_SHORT).show()
-            }
-        }
-
-        binding.imageProfile.setOnClickListener{
-            sharedViewModel.setAvatar("null")
-            val drawableResId = R.drawable.ic_photo
-            Picasso.get()
-                .load(drawableResId)
-                .into(binding.imageProfile)
-        }
+        checkPalindrome()
+        nextPage()
+        deletePhoto()
     }
 
     override fun onDestroyView() {
@@ -81,14 +63,73 @@ class FirstFragment : Fragment() {
         _binding = null
     }
 
+    private fun deletePhoto() {
+        if (avatar != getString(R.string.none) && avatar.isNotEmpty()) {
+            binding.imageProfile.setOnClickListener {
+                val builder = AlertDialog.Builder(activity)
+
+                builder.setTitle(getString(R.string.confirm_delete))
+                builder.setMessage(getString(R.string.confirm_delete_photo_profile))
+                builder.setPositiveButton(
+                    getString(R.string.yes),
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        sharedViewModel.setAvatar(getString(R.string.none))
+                        val drawableResId = R.drawable.ic_photo
+                        Picasso.get().load(drawableResId).into(binding.imageProfile)
+                        dialog.cancel()
+                        findNavController().navigate(R.id.action_FirstFragment_to_FirstFragment)
+                    })
+                builder.setNegativeButton(
+                    getString(R.string.no),
+                    DialogInterface.OnClickListener { dialog, _ ->
+                        dialog.cancel()
+                    })
+
+                val alert = builder.create()
+                alert.show()
+            }
+        }
+    }
+
+    private fun checkPalindrome() {
+        binding.buttonFirst.setOnClickListener {
+            val input = _binding?.inputFirst?.text.toString()
+            check(input)
+        }
+    }
+
     private fun check(input: String) {
         if (input.isNotBlank()) {
             val palindrome = Helpers().isPalindromeString(input)
 
             if (palindrome) {
-                _binding?.inputSecond?.setText("isPalindrome")
+                _binding?.inputSecond?.setText(getString(R.string.is_palindrome))
             } else {
-                _binding?.inputSecond?.setText("not palindrome")
+                _binding?.inputSecond?.setText(getString(R.string.not_palindrome))
+            }
+        }
+    }
+
+    private fun nextPage() {
+        binding.buttonSecond.setOnClickListener {
+            if (isButtonClickable) {
+                isButtonClickable = false
+
+                val input = _binding?.inputFirst?.text.toString()
+                if (Helpers().isPalindromeString(input) and input.isNotEmpty()) {
+                    sharedViewModel.setName(input)
+                    findNavController().navigate(R.id.action_FirstFragment_to_SecondFragment)
+                } else {
+                    Toast.makeText(
+                        context,
+                        getString(R.string.name_is_not_palindrome),
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
+                binding.buttonSecond.postDelayed({
+                    isButtonClickable = true
+                }, 2000) // 1000 milliseconds = 1 second
             }
         }
     }

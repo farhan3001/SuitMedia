@@ -1,13 +1,11 @@
 package com.example.suitmedia.ThirdPage
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.suitmedia.Model.Users
@@ -32,10 +30,10 @@ class UserAdapter(var userList: List<Users>) : RecyclerView.Adapter<UserAdapter.
             val avatar = user.avatar
 
             val bundle = Bundle()
-            bundle.putInt("id", id)
-            bundle.putString("email", email)
-            bundle.putString("username", name)
-            bundle.putString("avatar", avatar)
+            bundle.putInt(view.context.getString(R.string.id), id)
+            bundle.putString(view.context.getString(R.string.email), email)
+            bundle.putString(view.context.getString(R.string.username), name)
+            bundle.putString(view.context.getString(R.string.avatar2), avatar)
 
             view.findNavController().navigate(R.id.action_ThirdFragment_to_SecondFragment, bundle)
         }

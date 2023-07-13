@@ -1,15 +1,11 @@
 package com.example.suitmedia.SecondPage
 
-import android.content.ClipData
-import android.content.ClipboardManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.TextView
-import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
@@ -33,8 +29,6 @@ class SecondFragment : Fragment() {
     private lateinit var email: String
     private lateinit var avatar: String
 
-    private lateinit var myClipboard: ClipboardManager
-
     private val binding get() = _binding!!
 
     override fun onCreateView(
@@ -44,13 +38,10 @@ class SecondFragment : Fragment() {
 
         _binding = FragmentSecondBinding.inflate(inflater, container, false)
 
-        username = arguments?.getString("username").toString()
-        id = arguments?.getInt("id").toString()
-        email = arguments?.getString("email").toString()
-        avatar = arguments?.getString("avatar").toString()
-
-        myClipboard =
-            context?.let { getSystemService(it, ClipboardManager::class.java) } as ClipboardManager
+        username = arguments?.getString(getString(R.string.username)).toString()
+        id = arguments?.getInt(getString(R.string.id)).toString()
+        email = arguments?.getString(getString(R.string.email)).toString()
+        avatar = arguments?.getString(getString(R.string.avatar2)).toString()
 
         return binding.root
     }
@@ -69,11 +60,11 @@ class SecondFragment : Fragment() {
             sharedViewModel.setName(name)
         }
 
-        if (avatar != "null") {
+        if (avatar != getString(R.string.nil)) {
             sharedViewModel.setAvatar(avatar)
         }
 
-        if (username != "null") {
+        if (username != getString(R.string.nil)) {
             binding.userChose.text = username
         }
 

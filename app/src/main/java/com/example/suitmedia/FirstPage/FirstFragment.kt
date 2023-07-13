@@ -3,6 +3,7 @@ package com.example.suitmedia.FirstPage
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +14,10 @@ import androidx.navigation.fragment.findNavController
 import com.example.suitmedia.Helpers
 import com.example.suitmedia.Model.SharedView
 import com.example.suitmedia.R
+import com.example.suitmedia.ThirdPage.API.APIInstance
+import com.example.suitmedia.ThirdPage.API.ApiService
+import com.example.suitmedia.ThirdPage.API.DataDomain
+import com.example.suitmedia.ThirdPage.UserAdapter
 import com.example.suitmedia.databinding.FragmentFirstBinding
 import com.squareup.picasso.Picasso
 
@@ -23,8 +28,11 @@ class FirstFragment : Fragment() {
 
     private var _binding: FragmentFirstBinding? = null
     private val sharedViewModel: SharedView by activityViewModels()
+
     private lateinit var avatar: String
+
     private var isButtonClickable = true
+
 
     private val binding get() = _binding!!
 
@@ -35,6 +43,7 @@ class FirstFragment : Fragment() {
     ): View {
 
         _binding = FragmentFirstBinding.inflate(inflater, container, false)
+
         return binding.root
 
     }
@@ -70,6 +79,7 @@ class FirstFragment : Fragment() {
 
                 builder.setTitle(getString(R.string.confirm_delete))
                 builder.setMessage(getString(R.string.confirm_delete_photo_profile))
+
                 builder.setPositiveButton(
                     getString(R.string.yes),
                     DialogInterface.OnClickListener { dialog, _ ->
